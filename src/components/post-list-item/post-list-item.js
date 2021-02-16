@@ -1,29 +1,46 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PostList from '../post-list/post-list';
 
-const PostListItem = () => {
-    return (
-        <li className="app-list-item d-flex justify-content-between">
-            <span className="app-list-item-label">
-                Hello World
-            </span>
-            <div className="d-flex justify-content-center align-items-center">
-                <button 
-                type="button" 
-                className="btn-star btn-sm">
-                    <i className="fa fa-star"></i>
-                </button>
+export default class PostListItem extends Component {
 
-                <button 
-                type="button" 
-                className="btn-trash btn-sm">
-                    <i className="fa fa-trash-o"></i>
-                </button>
+    render () {
+        const {label, onDelete, onToggleImportant, onToggleLiked, important, like} = this.props;
+        let classNames = 'app-list-item d-flex justify-content-between';
 
-                <i className="fa fa-heart"></i>
+        if (important) {
+            classNames += ' important';
+        }
+
+        if (like) {
+            classNames += ' like';
+        }
+
+        return (
+            <div className={classNames}>
+                <span 
+                className="app-list-item-label"
+                onClick={onToggleLiked}>
+                    {label}
+                </span>
+                <div className="d-flex justify-content-center align-items-center">
+                    <button 
+                    type="button" 
+                    className="btn-star btn-sm"
+                    onClick={onToggleImportant}>
+                        <i className="fa fa-star"></i>
+                    </button>
+
+                    <button 
+                    type="button" 
+                    className="btn-trash btn-sm"
+                    onClick={onDelete}>
+                        <i className="fa fa-trash-o"></i>
+                    </button>
+
+                    <i className="fa fa-heart"></i>
+                </div>
             </div>
-        </li>
-    )
+        )
+    }
 }
 
-export default PostListItem;
